@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مولد كلمات مرور قوية</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .password-generator {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 300px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .controls, .options, .result {
+            margin: 15px 0;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #45a047;
+        }
+
+        .result {
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        #password {
+            word-wrap: break-word;
+            font-weight: bold;
+            color: #333;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="password-generator">
+        <h1>مولد كلمات مرور قوية</h1>
+        <div class="controls">
+            <label for="length">طول كلمة المرور:</label>
+            <input type="number" id="length" min="4" max="32" value="12">
+        </div>
+        <div class="options">
+            <label><input type="checkbox" id="uppercase" checked> أحرف كبيرة (A-Z)</label>
+            <label><input type="checkbox" id="lowercase" checked> أحرف صغيرة (a-z)</label>
+            <label><input type="checkbox" id="numbers" checked> أرقام (0-9)</label>
+            <label><input type="checkbox" id="symbols"> رموز (!@#$%)</label>
+        </div>
+        <button id="generate">توليد كلمة مرور</button>
+        <div class="result">
+            <h2>كلمة المرور:</h2>
+            <p id="password">اضغط على "توليد كلمة مرور"</p>
+        </div>
+    </div>
+    <script>
+        const lengthInput = document.getElementById("length");
+        const uppercaseCheckbox = document.getElementById("uppercase");
+        const lowercaseCheckbox = document.getElementById("lowercase");
+        const numbersCheckbox = document.getElementById("numbers");
+        const symbolsCheckbox = document.getElementById("symbols");
+        const generateButton = document.getElementById("generate");
+        const passwordDisplay = document.getElementById("password");
+
+        const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+        const numberChars = "0123456789";
+        const symbolChars = "!@#$%^&*()_+[]{}|;:,.<>?";
+
+        function generatePassword() {
+            const length = parseInt(lengthInput.value);
+            let characterPool = "";
+
+            if (uppercaseCheckbox.checked) characterPool += uppercaseChars;
+            if (lowercaseCheckbox.checked) characterPool += lowercaseChars;
+            if (numbersCheckbox.checked) characterPool += numberChars;
+            if (symbolsCheckbox.checked) characterPool += symbolChars;
+
+            if (characterPool === "") {
+                passwordDisplay.textContent = "اختر نوعًا واحدًا على الأقل من الأحرف!";
+                return;
+            }
+
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * characterPool.length);
+                password += characterPool[randomIndex];
+            }
+
+            passwordDisplay.textContent = password;
+        }
+
+        generateButton.addEventListener("click", generatePassword);
+    </script>
+</body>
+</html>
